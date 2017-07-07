@@ -75,7 +75,8 @@ def parse_sbml_file(file, subsystem_pattern='SUBSYSTEM: *(?P<value>.*\S+.*) *\</
             
         # parse the subsystem, if available
         notes = findfirst(rxn,'notes')
-        notetext = ET.tostring(notes)
+        if notes == None: notetext = ""
+        else: notetext = ET.tostring(notes)
         def parse_notes(pattern):
             patt = re.compile(pattern)
             results = patt.search(notetext)
@@ -110,8 +111,8 @@ def parse_sbml_file(file, subsystem_pattern='SUBSYSTEM: *(?P<value>.*\S+.*) *\</
 if __name__ == '__main__':
     species,reactions,compartments = parse_sbml_file(file="../test/ecoli2011.xml")
     
-    print "found", len(species), "species"
-    print "found", len(reactions), "reactions"
-    print "found", len(compartments), "compartments"
+    print ("found", len(species), "species")
+    print ("found", len(reactions), "reactions")
+    print ("found", len(compartments), "compartments")
     
-    print compartments
+    print (compartments)

@@ -30,7 +30,7 @@ class Gpr(object):
 
 
 def write_gpr_file(gpr,filename):
-    f = open(filename,'w')
+    f = open(filename,'wb')
     pickle.dump(gpr,f)
     f.close()
 

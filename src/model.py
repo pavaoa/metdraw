@@ -177,7 +177,7 @@ class Subsystem(Parameterized):
         return n[0]
     
     def display(self,indent=''):
-        print indent+str(len(self.reactions)),self.name
+        print (indent+str(len(self.reactions)),self.name)
         
     
 class Compartment(Parameterized):
@@ -248,7 +248,7 @@ class Compartment(Parameterized):
         new_indent = indent + '   '
         print (indent + 
                "Compartment [{id}] {name}".format(id=self.id,name=self.name))
-        print new_indent+str(len(self.local_exchanges)),"EXCHANGE REACTIONS"
+        print (new_indent+str(len(self.local_exchanges)),"EXCHANGE REACTIONS")
         for sub in self.subsystems:
             sub.display(indent=new_indent)
         for comp in self.compartments:
@@ -292,7 +292,7 @@ class Model(Parameterized):
         return n[0]
     
     def display(self):
-        print "Model",self.name
+        print ("Model",self.name)
         for comp in self.compartments:
             comp.display(indent='   ')
         

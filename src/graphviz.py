@@ -173,7 +173,7 @@ class Graph(object):
             sed_error = None
         
         if dot_error or sed_error:
-            print dot_error, sed_error
+            print (dot_error, sed_error)
             
         if clean:
             os.remove(filename)
@@ -188,9 +188,9 @@ if __name__ == '__main__':
     g = Graph(name='g')
     g.add(Edge('a','b'))
     g.add(AttrStmt('edge',orange="true"))
-    print str(g)
+    print (str(g))
     g.tag('::1')
-    print str(g)
+    print (str(g))
     
     
 

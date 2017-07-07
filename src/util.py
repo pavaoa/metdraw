@@ -15,7 +15,7 @@ def json_unicode_to_str(obj):
         new[new_k] = new_v
     return new
 
-def parse_json_file(filename,unicode_to_str=True):
+def parse_json_file(filename,unicode_to_str=False):
     obj = JSON.load(open(filename))
     if unicode_to_str:
         obj = json_unicode_to_str(obj)

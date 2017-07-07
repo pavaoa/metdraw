@@ -63,9 +63,9 @@ def read_json_config_file(filename):
 read_json_config_file(DEFAULTS_JSON_FILENAME)
 
 def display_parameters(params):
-    print "MetDraw Parameters:"
+    print ("MetDraw Parameters:")
     for k,v in params.iteritems():
-        print "   ", k, ":", str(v)
+        print ("   ", k, ":", str(v))
 
 def metdraw(filename,count_mets=None,met_file=None,show=False,
             engine='fdp',output='svg',quiet=False,q='1',Ln='1000',
@@ -81,7 +81,7 @@ def metdraw(filename,count_mets=None,met_file=None,show=False,
     output_filename = filename + '.' + output
 
     if not quiet:
-        print 'Loading model file', sbml_filename
+        print ('Loading model file', sbml_filename)
     if filename.endswith('.json'):
         model = Model.build_model(*model_json.parse_json_file(file=sbml_filename))
     else:
@@ -90,13 +90,13 @@ def metdraw(filename,count_mets=None,met_file=None,show=False,
         if not no_gpr:
             gpr.write_gpr_file(gpr.Gpr(pieces['reactions']),gpr_filename)
             if not quiet:
-                print 'GPR written to file', gpr_filename
+                print ('GPR written to file', gpr_filename)
     model.name = filename
     model.set_param(**defaults)
     
     if count_mets:
         if not quiet:
-            print 'Writing metabolite counts to file', filename+'.mets'
+            print ('Writing metabolite counts to file', filename+'.mets')
         Minors.write_met_file(Minors.count_species(model),
                               filename=mets_filename,
                               json=json)
@@ -105,7 +105,7 @@ def metdraw(filename,count_mets=None,met_file=None,show=False,
     if met_file:
         minors = Minors.read_met_file(filename=met_file)
         if not quiet:
-            print len(minors), "minors loaded from file '{0}'".format(met_file)
+            print (len(minors), "minors loaded from file '{0}'".format(met_file))
     else:
         # find the minors in the model; for now, we create a temporary mets
         # file that is deleted after loading the minors
@@ -114,7 +114,7 @@ def metdraw(filename,count_mets=None,met_file=None,show=False,
         minors = Minors.read_met_file(temp_filename)
         os.remove(temp_filename)
         if not quiet:
-            print len(minors), "minors found in model"
+            print (len(minors), "minors found in model")
     model.set_param(name="minors",value=minors)
         
     if show:
@@ -122,16 +122,16 @@ def metdraw(filename,count_mets=None,met_file=None,show=False,
         display_parameters(defaults)
     
     if not quiet:
-        print 'Creating reaction layout'
+        print ('Creating reaction layout')
     g = layout.model_to_dot(model)
     
     if not quiet:
-        print 'Creating DOT file', dot_filename
+        print ('Creating DOT file', dot_filename)
     g.to_file(dot_filename)
     
     # run graphviz
     if not quiet:
-        print 'Preparing Graphviz call:'
+        print ('Preparing Graphviz call:')
     cmdstr = '{dot} -q{q} -Ln{Ln} -K{engine} -T{fmt} -o {outfile} {file}'
     cmd = cmdstr.format(dot=dotcmd,
                         q=q,Ln=Ln,
@@ -140,14 +140,14 @@ def metdraw(filename,count_mets=None,met_file=None,show=False,
                         outfile=output_filename,
                         file=dot_filename)
     if not quiet:
-        print '   ' + cmd
+        print ('   ' + cmd)
     if not norun:
-        print 'Running Graphviz'
+        print ('Running Graphviz')
         error = os.system(cmd)
         if error:
-            print "Error running dot:", error
+            print ("Error running dot:", error)
     else:
-        print 'ok'
+        print ('ok')
 
     # clean up intermediate DOT file
     os.remove(dot_filename)

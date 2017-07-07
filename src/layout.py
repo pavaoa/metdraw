@@ -62,17 +62,17 @@ def reaction_to_dot(rxn):
             statements.append(Node(minor_id(r.id),label=met_label,
                                                   **MINOR_MET_ATTRS))
             statements.append(Edge(minor_id(r.id),rmnode,
-                                   dir=react_dir,id=rids.next()))
+                                   dir=react_dir,id=next(rids)))
         for p in rxn.minor_products:
             met_label = METABOLITE_LABEL_TRANSFORM(p.label_id)
             statements.append(Node(minor_id(p.id),label=met_label,
                                                   **MINOR_MET_ATTRS))
             statements.append(Edge(pmnode,minor_id(p.id),
-                                   dir="forward",id=rids.next()))
+                                   dir="forward",id=next(rids)))
             
         if not COMPACT:
             # connect the rm and pm nodes
-            statements.append(Edge(rmnode,pmnode,dir="none",id=rids.next()))
+            statements.append(Edge(rmnode,pmnode,dir="none",id=next(rids)))
         
     # make sure there is at least a "dummy" node on each side
     # create the nodes for major species
@@ -101,16 +101,16 @@ def reaction_to_dot(rxn):
         statements.append(Node(pnode,**INVISIBLE_NODE_ATTRS))
     
     for r in rxn.major_reactants:
-        statements.append(Edge(r.id,rnode,dir=react_dir,id=rids.next()))
+        statements.append(Edge(r.id,rnode,dir=react_dir,id=next(rids)))
     for p in rxn.major_products:
-        statements.append(Edge(pnode,p.id,dir="forward",id=rids.next()))
+        statements.append(Edge(pnode,p.id,dir="forward",id=next(rids)))
     
     if render_minors:
-        statements.append(Edge(rnode,rmnode,dir="none",id=rids.next()))
-        statements.append(Edge(pmnode,pnode,dir="none",id=rids.next(),
+        statements.append(Edge(rnode,rmnode,dir="none",id=next(rids)))
+        statements.append(Edge(pmnode,pnode,dir="none",id=next(rids),
                                             label=label_id))
     else:
-        statements.append(Edge(rnode,pnode,dir="none",id=rids.next(),
+        statements.append(Edge(rnode,pnode,dir="none",id=next(rids),
                                            label=label_id))
         
     return statements
