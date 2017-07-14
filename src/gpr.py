@@ -35,10 +35,7 @@ def write_gpr_file(gpr,filename):
     f.close()
 
 def read_gpr_file(filename):
-    f = open(filename)
+    f = open(filename, 'rb')
     gpr = pickle.load(f)
     f.close()
     return gpr
-
-
-
